@@ -1,0 +1,14 @@
+.card {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+mat-card-title {
+  margin: 1rem 0;
+}

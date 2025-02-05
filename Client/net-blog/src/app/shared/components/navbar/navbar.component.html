@@ -1,0 +1,19 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button (click)="toggleSidenav()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>Net Blog</span>
+  <span class="spacer"></span>
+  <a [routerLink]="['/']" mat-button>Home</a>
+  
+  <!-- Dropdown Button -->
+  <mat-menu #menu="matMenu">
+    <a [routerLink]="['/admin/categories']" mat-menu-item>Category</a>
+    <a mat-menu-item>Settings</a>
+    <a mat-menu-item>Logout</a>
+  </mat-menu>
+  <button mat-button [matMenuTriggerFor]="menu">
+    Admin
+    <mat-icon iconPositionEnd>arrow_drop_down</mat-icon>
+  </button>
+</mat-toolbar>

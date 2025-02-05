@@ -1,0 +1,24 @@
+<mat-card class="card">
+  <mat-card-title>Add Category</mat-card-title>
+  <mat-card-content>
+    <form #form="ngForm" (ngSubmit)="onFormSubmit()">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Category Name</mat-label>
+        <input id="categoryName" name="categoryName" matInput placeholder="Enter category name"
+          [(ngModel)]="model.name">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Slug</mat-label>
+        <input id="categorySlug" name="categorySlug" matInput placeholder="Enter slug" [(ngModel)]="model.slug">
+      </mat-form-field>
+
+      <button mat-flat-button type="submit" style="margin-right: 1rem;">
+        Submit
+      </button>
+      <button mat-raised-button type="button" [routerLink]="['/admin/categories']">
+        Cancel
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>
