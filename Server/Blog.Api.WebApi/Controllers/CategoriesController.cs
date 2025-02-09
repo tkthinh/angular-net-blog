@@ -1,7 +1,7 @@
 ﻿using Blog.Api.Application.Dtos.Categories;
 using Blog.Api.Application.Interfaces.Categories;
+using Blog.Api.Application.Mappers;
 using Blog.Api.Domain;
-using Blog.Api.Infrastructure.Repositories.Categories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.Api.WebApi.Controllers
@@ -10,11 +10,11 @@ namespace Blog.Api.WebApi.Controllers
    [Route("api/[controller]")]
    public class CategoriesController : ControllerBase
    {
-      private readonly ICategoryRepository _categoryRepository;
+      private readonly ICategoryRepository categoryRepository;
 
       public CategoriesController(ICategoryRepository categoryRepository)
       {
-         this._categoryRepository = categoryRepository;
+         this.categoryRepository = categoryRepository;
       }
 
       // POST /api/categories
@@ -28,15 +28,10 @@ namespace Blog.Api.WebApi.Controllers
             Slug = request.Slug
          };
 
-         await _categoryRepository.CreateAsync(category);
+         await categoryRepository.CreateAsync(category);
 
          // Domain model to DTO
-         var response = new CategoryDto
-         {
-            Id = category.Id,
-            Name = category.Name,
-            Slug = category.Slug
-         };
+         var response = category.ToDto();
 
          return Ok(response);
       }
@@ -45,17 +40,12 @@ namespace Blog.Api.WebApi.Controllers
       [HttpGet]
       public async Task<IActionResult> GetCategories()
       {
-         var categories = await _categoryRepository.GetAllAsync();
+         var categories = await categoryRepository.GetAllAsync();
 
          var response = new List<CategoryDto>();
          foreach (var category in categories)
          {
-            response.Add(new CategoryDto
-            {
-               Id = category.Id,
-               Name = category.Name,
-               Slug = category.Slug
-            });
+            response.Add(category.ToDto());
          }
 
          return Ok(response);
@@ -65,17 +55,12 @@ namespace Blog.Api.WebApi.Controllers
       [HttpGet("{id}")]
       public async Task<IActionResult> GetCategoryById([FromRoute] Guid id)
       {
-         var category = await _categoryRepository.FindByIdAsync(id);
+         var category = await categoryRepository.FindByIdAsync(id);
          if (category == null)
          {
             return NotFound();
          }
-         var response = new CategoryDto
-         {
-            Id = category.Id,
-            Name = category.Name,
-            Slug = category.Slug
-         };
+         var response = category.ToDto();
          return Ok(response);
       }
 
@@ -83,7 +68,7 @@ namespace Blog.Api.WebApi.Controllers
       [HttpPut("{id}")]
       public async Task<IActionResult> UpdateCategory([FromRoute] Guid id, [FromBody] UpdateCategoryRequestDto request)
       {
-         var category = await _categoryRepository.FindByIdAsync(id);
+         var category = await categoryRepository.FindByIdAsync(id);
          if (category == null)
          {
             return NotFound();
@@ -91,14 +76,9 @@ namespace Blog.Api.WebApi.Controllers
 
          category.Name = request.Name;
          category.Slug = request.Slug;
-         await _categoryRepository.UpdateAsync(category);
+         await categoryRepository.UpdateAsync(category);
 
-         var response = new CategoryDto
-         {
-            Id = category.Id,
-            Name = category.Name,
-            Slug = category.Slug
-         };
+         var response = category.ToDto();
          return Ok(response);
       }
 
@@ -106,12 +86,12 @@ namespace Blog.Api.WebApi.Controllers
       [HttpDelete("{id}")]
       public async Task<IActionResult> DeleteCategory([FromRoute] Guid id)
       {
-         var category = await _categoryRepository.FindByIdAsync(id);
+         var category = await categoryRepository.FindByIdAsync(id);
          if (category == null)
          {
             return NotFound();
          }
-         await _categoryRepository.DeleteAsync(id);
+         await categoryRepository.DeleteAsync(id);
          return Ok();
       }
    }

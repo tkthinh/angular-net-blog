@@ -1,6 +1,8 @@
 using Blog.Api.Application.Interfaces.Categories;
+using Blog.Api.Application.Interfaces.Posts;
 using Blog.Api.Infrastructure;
 using Blog.Api.Infrastructure.Repositories.Categories;
+using Blog.Api.Infrastructure.Repositories.Posts;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -21,6 +23,7 @@ builder.Services.AddControllers();
 builder.Services.AddCors();
 
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IPostRepository, PostRepository>();
 
 builder.Host.UseSerilog((context, configuration) =>
 {

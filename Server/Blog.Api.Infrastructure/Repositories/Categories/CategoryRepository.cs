@@ -6,34 +6,34 @@ namespace Blog.Api.Infrastructure.Repositories.Categories
 {
    public class CategoryRepository : ICategoryRepository
    {
-      private readonly ApplicationDbContext _dbContext;
+      private readonly ApplicationDbContext dbContext;
 
       public CategoryRepository(ApplicationDbContext dbContext)
       {
-         this._dbContext = dbContext;
+         this.dbContext = dbContext;
       }
 
       public async Task<Category> CreateAsync(Category category)
       {
-         await _dbContext.Categories.AddAsync(category);
-         await _dbContext.SaveChangesAsync();
+         await dbContext.Categories.AddAsync(category);
+         await dbContext.SaveChangesAsync();
 
          return category;
       }
 
       public async Task<IEnumerable<Category>> GetAllAsync()
       {
-         return await _dbContext.Categories.ToListAsync();
+         return await dbContext.Categories.ToListAsync();
       }
 
       public async Task<Category?> UpdateAsync(Category category)
       {
-         var existingCategory = await _dbContext.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);
+         var existingCategory = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);
 
          if (existingCategory != null)
          {
-            _dbContext.Entry(existingCategory).CurrentValues.SetValues(category);
-            await _dbContext.SaveChangesAsync();
+            dbContext.Entry(existingCategory).CurrentValues.SetValues(category);
+            await dbContext.SaveChangesAsync();
             return category;
          }
 
@@ -42,12 +42,12 @@ namespace Blog.Api.Infrastructure.Repositories.Categories
 
       public async Task<Category?> DeleteAsync(Guid id)
       {
-         var existingCategory = await _dbContext.Categories.FirstOrDefaultAsync(x => x.Id == id);
+         var existingCategory = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == id);
 
          if (existingCategory != null)
          {
-            _dbContext.Categories.Remove(existingCategory);
-            await _dbContext.SaveChangesAsync();
+            dbContext.Categories.Remove(existingCategory);
+            await dbContext.SaveChangesAsync();
             return existingCategory;
          }
 
@@ -56,7 +56,7 @@ namespace Blog.Api.Infrastructure.Repositories.Categories
 
       public async Task<Category?> FindByIdAsync(Guid id)
       {
-         return await _dbContext.Categories.FirstOrDefaultAsync(x => x.Id == id);
+         return await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == id);
       }
    }
 }
