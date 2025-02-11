@@ -1,0 +1,14 @@
+.card {
+  width: 80%;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+.add-button {
+  float: right;
+}
+
+table {
+  width: 100%;
+  margin-top: 20px;
+}

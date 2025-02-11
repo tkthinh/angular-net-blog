@@ -9,7 +9,7 @@
   <!-- Dropdown Button -->
   <mat-menu #menu="matMenu">
     <a [routerLink]="['/admin/categories']" mat-menu-item>Category</a>
-    <a mat-menu-item>Settings</a>
+    <a [routerLink]="['/admin/blogs']" mat-menu-item>Blogs</a>
     <a mat-menu-item>Logout</a>
   </mat-menu>
   <button mat-button [matMenuTriggerFor]="menu">
