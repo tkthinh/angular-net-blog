@@ -1,20 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CategoryService } from '../services/category.service';
-import { Category } from '../models/category.model';
 import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Category } from '../models/category.model';
+import { CategoryService } from '../services/category.service';
 
+import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatError, MatLabel } from '@angular/material/form-field';
-import { CommonModule } from '@angular/common';
+import {
+  MatError,
+  MatFormFieldModule,
+  MatLabel,
+} from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { UpdateCategoryRequest } from '../models/update-category-request.model';
 
@@ -42,7 +44,7 @@ export class EditCategoryComponent implements OnInit {
     private categoryService: CategoryService,
     private route: ActivatedRoute,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
   ) {
     this.categoryForm = this.fb.group({
       name: ['', [Validators.required]],
@@ -106,8 +108,7 @@ export class EditCategoryComponent implements OnInit {
             console.error('Error deleting category', err);
           },
         });
-      }
-      else return;
+      } else return;
     }
   }
 }

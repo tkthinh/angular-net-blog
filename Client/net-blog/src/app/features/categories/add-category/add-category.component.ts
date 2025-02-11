@@ -1,12 +1,12 @@
 import { Component, OnDestroy } from '@angular/core';
-import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { FormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { Router, RouterLink } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AddCategoryRequest } from '../models/add-category-request.model';
 import { CategoryService } from '../services/category.service';
-import { Subscription } from 'rxjs';
-import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-add-category',
@@ -26,7 +26,7 @@ export class AddCategoryComponent implements OnDestroy {
 
   constructor(
     private categoryService: CategoryService,
-    private router: Router
+    private router: Router,
   ) {
     this.model = { name: '', slug: '' };
   }
