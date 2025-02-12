@@ -67,7 +67,7 @@ export class AddBlogComponent implements OnInit {
       publishDate: ['', [Validators.required]],
       category: ['', [Validators.required]],
       author: ['', [Validators.required]],
-      isVisible: [false], // Checkbox default to false
+      isPublished: [false], // Checkbox default to false
     });
   }
 

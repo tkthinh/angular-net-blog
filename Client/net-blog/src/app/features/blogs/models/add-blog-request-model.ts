@@ -6,5 +6,5 @@ export interface AddBlogModel {
   slug: string;
   author: string;
   publishedDate: Date;
-  isVisible: boolean;
+  isPublished: boolean;
 }

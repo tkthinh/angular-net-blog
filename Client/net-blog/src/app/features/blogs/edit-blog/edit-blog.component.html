@@ -1,7 +1,7 @@
 <mat-card class="card">
-  <mat-card-title>Add Blog Post</mat-card-title>
+  <mat-card-title>Edit Blog Post</mat-card-title>
   <mat-card-content>
-    <form [formGroup]="blogForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="blogForm" (ngSubmit)="onUpdate()">
 
       <!-- Title -->
       <mat-form-field appearance="outline" class="full-width">
@@ -21,32 +21,17 @@
         <textarea matInput formControlName="shortDescription" rows="3" placeholder="Enter short description"></textarea>
       </mat-form-field>
 
-      <!-- Content (Text Area with Markdown Preview) -->
+      <!-- Content -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Content</mat-label>
-        <textarea matInput formControlName="content" rows="6" placeholder="Enter full content (Markdown supported)"
-          (input)="updatePreview()"></textarea>
+        <textarea matInput formControlName="content" rows="6" placeholder="Enter full content"></textarea>
       </mat-form-field>
 
-      <!-- Markdown Preview -->
-      <mat-card class="preview-card">
-        <mat-card-title>Markdown Preview</mat-card-title>
-        <mat-card-content>
-          <markdown [data]="markdownPreview"></markdown>
-        </mat-card-content>
-      </mat-card>
-
-      <!-- Thumbnail URL Input -->
+      <!-- Thumbnail URL -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Thumbnail URL</mat-label>
-        <input matInput formControlName="thumbnailUrl" placeholder="Enter thumbnail URL" (input)="updateThumbnail()">
+        <input matInput formControlName="thumbnailUrl" placeholder="Enter thumbnail URL">
       </mat-form-field>
-
-      <!-- Thumbnail Preview -->
-      <div class="thumbnail-preview" *ngIf="thumbnailUrl">
-        <p>Thumbnail Preview:</p>
-        <img [src]="thumbnailUrl" alt="Thumbnail Preview" (error)="onImageError($event)">
-      </div>
 
       <!-- Category Select -->
       <mat-form-field appearance="outline" class="full-width">
@@ -78,8 +63,9 @@
 
       <!-- Submit Button -->
       <div class="actions">
-        <button mat-raised-button color="primary" type="submit" [disabled]="blogForm.invalid">Submit</button>
-        <button mat-raised-button color="warn" type="button" (click)="navigateToBlogs()">Cancel</button>
+        <button mat-flat-button color="primary" type="submit" [disabled]="blogForm.invalid">Update</button>
+        <button mat-raised-button color="warn" type="button" (click)="onDelete()">Delete</button>
+        <button mat-raised-button color="accent" type="button" (click)="navigateToBlogs()">Cancel</button>
       </div>
 
     </form>
