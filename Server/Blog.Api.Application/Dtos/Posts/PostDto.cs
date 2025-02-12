@@ -1,4 +1,6 @@
-﻿namespace Blog.Api.Application.Dtos.Posts
+﻿using Blog.Api.Application.Dtos.Categories;
+
+namespace Blog.Api.Application.Dtos.Posts
 {
    public class PostDto
    {
@@ -11,5 +13,6 @@
       public DateTime PublishedDate { get; set; }
       public string Author { get; set; }
       public bool IsPublished { get; set; }
+      public List<CategoryDto> Categories { get; set; } = new List<CategoryDto>();
    }
 }

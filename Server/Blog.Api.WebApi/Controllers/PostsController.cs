@@ -1,4 +1,5 @@
 ﻿using Blog.Api.Application.Dtos.Posts;
+using Blog.Api.Application.Interfaces.Categories;
 using Blog.Api.Application.Interfaces.Posts;
 using Blog.Api.Application.Mappers;
 using Blog.Api.Domain;
@@ -11,10 +12,12 @@ namespace Blog.Api.WebApi.Controllers
    public class PostsController : ControllerBase
    {
       private readonly IPostRepository postRepository;
+      private readonly ICategoryRepository categoryRepository;
 
-      public PostsController(IPostRepository postRepository)
+      public PostsController(IPostRepository postRepository, ICategoryRepository categoryRepository)
       {
          this.postRepository = postRepository;
+         this.categoryRepository = categoryRepository;
       }
 
       // POST /api/blogs
@@ -31,8 +34,19 @@ namespace Blog.Api.WebApi.Controllers
             Slug = request.Slug,
             PublishedDate = request.PublishedDate,
             Author = request.Author,
-            IsPublished = request.IsPublished
+            IsPublished = request.IsPublished,
+            Categories = new List<Category>()
          };
+
+         foreach(var categoryId in request.Categories)
+         {
+            var existingCategory = await categoryRepository.FindByIdAsync(categoryId);
+            if (existingCategory is not null)
+            {
+               post.Categories.Add(existingCategory);
+            }
+         }
+
          await postRepository.CreateAsync(post);
 
          // Domain model to DTO

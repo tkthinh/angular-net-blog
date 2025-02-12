@@ -20,7 +20,8 @@ namespace Blog.Api.Application.Mappers
             Slug = post.Slug,
             PublishedDate = post.PublishedDate,
             Author = post.Author,
-            IsPublished = post.IsPublished
+            IsPublished = post.IsPublished,
+            Categories = post.Categories.Select(c => c.ToDto()).ToList()
          };
       }
    }

@@ -10,6 +10,7 @@
       public DateTime PublishedDate { get; set; }
       public required string Author { get; set; }
       public bool IsPublished { get; set; }
+      public Guid[] Categories { get; set; }
    }
 }
 
