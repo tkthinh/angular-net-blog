@@ -24,7 +24,8 @@
       <!-- Content (Text Area with Markdown Preview) -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Content</mat-label>
-        <textarea matInput formControlName="content" rows="6" placeholder="Enter full content (Markdown supported)" (input)="updatePreview()"></textarea>
+        <textarea matInput formControlName="content" rows="6" placeholder="Enter full content (Markdown supported)"
+          (input)="updatePreview()"></textarea>
       </mat-form-field>
 
       <!-- Markdown Preview -->
@@ -46,6 +47,16 @@
         <p>Thumbnail Preview:</p>
         <img [src]="thumbnailUrl" alt="Thumbnail Preview" (error)="onImageError($event)">
       </div>
+
+      <!-- Category Select -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Category</mat-label>
+        <mat-select multiple formControlName="category">
+          <mat-option *ngFor="let category of categories$ | async" [value]="category.id">{{ category.name
+            }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="blogForm.get('category')?.hasError('required')">Category is required.</mat-error>
+      </mat-form-field>
 
       <!-- Publish Date -->
       <mat-form-field appearance="outline" class="full-width">

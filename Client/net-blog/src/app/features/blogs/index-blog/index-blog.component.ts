@@ -23,7 +23,7 @@ import { CommonModule } from '@angular/common';
 })
 export class IndexBlogComponent implements OnInit {
   blogs$?: Observable<Blog[]>;
-  displayedColumns: string[] = ['id', 'title', 'author', 'isPublished', 'actions'];
+  displayedColumns: string[] = ['id', 'title', 'author', 'categories', 'isPublished', 'actions'];
 
   constructor(private blogService: BlogService) {}
 

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -15,8 +15,13 @@ import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
 
 import { CommonModule } from '@angular/common';
+import { MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 import { MarkdownModule } from 'ngx-markdown';
-import { AddBlogModel } from '../models/add-blog-model';
+import { Observable } from 'rxjs';
+import { Category } from '../../categories/models/category.model';
+import { CategoryService } from '../../categories/services/category.service';
+import { AddBlogModel } from '../models/add-blog-request-model';
 import { BlogService } from '../services/blog.service';
 
 @Component({
@@ -29,6 +34,8 @@ import { BlogService } from '../services/blog.service';
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSelectModule,
+    MatOptionModule,
     MatDatepickerModule,
     MatCheckboxModule,
     MatButtonModule,
@@ -36,14 +43,16 @@ import { BlogService } from '../services/blog.service';
   templateUrl: './add-blog.component.html',
   styleUrl: './add-blog.component.css',
 })
-export class AddBlogComponent {
+export class AddBlogComponent implements OnInit {
   blogForm: FormGroup;
+  categories$?: Observable<Category[]>;
   markdownPreview: string = '';
   thumbnailUrl: string = '';
 
   constructor(
     private fb: FormBuilder,
     private blogService: BlogService,
+    private categoryService: CategoryService,
     public router: Router,
   ) {
     this.blogForm = this.fb.group({
@@ -56,6 +65,7 @@ export class AddBlogComponent {
       content: ['', [Validators.required, Validators.minLength(20)]],
       thumbnailUrl: ['', [Validators.required]],
       publishDate: ['', [Validators.required]],
+      category: ['', [Validators.required]],
       author: ['', [Validators.required]],
       isVisible: [false], // Checkbox default to false
     });
@@ -70,7 +80,8 @@ export class AddBlogComponent {
   }
 
   onImageError(event: Event): void {
-    (event.target as HTMLImageElement).src = 'https://images.pexels.com/photos/28216688/pexels-photo-28216688/free-photo-of-autumn-camping.png?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1';
+    (event.target as HTMLImageElement).src =
+      'https://images.pexels.com/photos/28216688/pexels-photo-28216688/free-photo-of-autumn-camping.png?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1';
   }
 
   onSubmit(): void {
@@ -90,6 +101,10 @@ export class AddBlogComponent {
   }
 
   navigateToBlogs(): void {
-    this.router.navigate(['/blogs']);
+    this.router.navigate(['/admin/blogs']);
+  }
+
+  ngOnInit(): void {
+    this.categories$ = this.categoryService.getAllCategories();
   }
 }
